@@ -29,8 +29,6 @@ public class characterScript : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		//Ground.transform.position = Vector3.forward + 25*Vector3.down;
-
 		VerticalSpeed = 1500;
 		MaxY = 1000;
 		antiGravity = 10f;
@@ -49,7 +47,7 @@ public class characterScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		cameraComponent.transform.rotation = new Quaternion() { eulerAngles = new Vector3(0, 0, 0) };
+		//cameraComponent.transform.rotation = new Quaternion() { eulerAngles = new Vector3(0, 0, 0) };
 		float currentDeltaTime = Time.deltaTime;
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
