@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     public void SpawnObstacle(Transform newChunk)
     {
         int spawnChance = Random.Range(0, 4);
-        if (spawnChance != 3) 
+        if (spawnChance == 3 || spawnChance == 4) 
         {
             Debug.Log("No obstacle spawned, chance: " + spawnChance);
             return;
@@ -101,7 +101,8 @@ public class GameManager : MonoBehaviour
         if (previousLowest != null && newHighest != null)
         {
             Vector3 offset = previousLowest.position - newHighest.position;
-            newChunk.position += offset;
+            //newChunk.position += offset;
+            newChunk.position = previousLowest.position;
             Debug.Log($"Connected chunks. Previous Lowest: {previousLowest.position}, New Highest: {newHighest.position}, Offset: {offset}");
         }
         else

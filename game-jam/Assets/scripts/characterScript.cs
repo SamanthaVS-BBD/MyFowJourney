@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class characterScript : MonoBehaviour
@@ -23,7 +24,6 @@ public class characterScript : MonoBehaviour
 
 	public Transform characterTransform; // The transform of your character.
     public string groundTag = "ground"; // Tag that represents the ground or slope.
-
 
 	public GameObject Ground;
 	// Start is called before the first frame update
@@ -69,10 +69,11 @@ public class characterScript : MonoBehaviour
 			}
 		}
 
+
 		if(!IsGrounded)
 		{
 			if(Input.GetKey(KeyCode.Space))
-			{
+			{	
 				var prevRotation = Rigidbody.rotation;
 				Rigidbody.rotation += RotationalSpeed * Time.deltaTime;
 				Rigidbody.rotation = WrapAngle(Rigidbody.rotation);
