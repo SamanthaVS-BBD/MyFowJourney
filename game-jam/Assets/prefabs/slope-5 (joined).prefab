@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3939699041883867558}
   - component: {fileID: 6746712548546624759}
   - component: {fileID: 7768510408560614824}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: slope-5 (joined)
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 8165799138451505945}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -413.3, y: -113.3, z: 0}
+  m_LocalPosition: {x: -413.7, y: -111.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: 378600ad72403084795bbd731d121d41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 109933681616686812}
   - component: {fileID: 3272487559108398279}
   - component: {fileID: 700807922701291794}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: slope-8
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ Transform:
   m_GameObject: {fileID: 8953464296398929452}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -80.649994, y: -0.15000153, z: 0}
+  m_LocalPosition: {x: -81.6, y: -5.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -172,7 +172,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: 830a18d0005c123468dc009ebf927f52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

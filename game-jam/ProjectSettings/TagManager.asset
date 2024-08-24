@@ -6,15 +6,16 @@ TagManager:
   tags:
   - ground
   - obstacle
+  - UIManager
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
+  - ground
+  - obstacles
   - 
   - 
   - 
@@ -42,6 +43,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: ui
+    uniqueID: 3189946229
+    locked: 0
+  - name: player
+    uniqueID: 2579275617
     locked: 0
   - name: ground
     uniqueID: 3395072919

@@ -59,6 +59,7 @@ public class SmoothColliderAdder2D : MonoBehaviour
                 Debug.LogWarning($"No SpriteRenderer found on {groundObject.name}");
             }
         }
+
     }
 
     Vector2[] GenerateSmoothColliderPath(Sprite sprite)

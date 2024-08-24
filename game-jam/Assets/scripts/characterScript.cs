@@ -1,47 +1,73 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class characterScript : MonoBehaviour
 {
 	public Camera cameraComponent;
 	public Rigidbody2D Rigidbody;
+
+	[Header("Movement")]
 	public float VerticalSpeed = 1500;
 	public float MaxY = 3500;
 	public float MaxVerticalSpeed;
 	public float antiGravity;
-
 	public float MinX = 800;
 	public float HorizontalSpeed = 175;
 	public float MaxX = 1000;
 
+	[Header("Jump")]
 	public float RotationalSpeed = 325;
-
 	public bool IsGrounded = false;
 	public int NumFlips = 0;
 	public int MaxFlips = 10;
 	public float FlipBoost = 500;
-
+	public float rotationSpeed = 8f;
 	public Transform characterTransform; // The transform of your character.
-    public string groundTag = "ground"; // Tag that represents the ground or slope.
+	public string groundTag = "ground"; // Tag that represents the ground or slope.
 
+	[SerializeField] private float rayDistance = 4; // Distance of the raycast.
 
+	[Header("Ground Detection")]
+    public Transform groundCheck;
+    public LayerMask groundLayer;
+    public float groundCheckRadius = 0.2f;
+    public Vector2 groundCheckSize = new Vector2(0.5f, 0.5f);
+	
+	[Header("References")]
+	public sceneManager _sceneManager;
+	public gameOverScript _gameOverScript;
+	public Text ScoreDisplay;
+	public GameObject gameOverUI;
 	public GameObject Ground;
+
+	private int score;
+	public int getScore() => score;
+	private float prevScoreDistance;
+	private bool isGameOver;
+
+	private float groundCheckDelay = 0.1f;
+	private float lastGroundedTime = 0;
+
 	// Start is called before the first frame update
 	void Start()
 	{
-		//Ground.transform.position = Vector3.forward + 25*Vector3.down;
-
+		isGameOver = false;
 		VerticalSpeed = 1500;
 		MaxY = 1000;
 		antiGravity = 10f;
 
 		MinX = 2000;
-		HorizontalSpeed = 1750;
+		HorizontalSpeed = 2000;//1750;
 		MaxX = 3500;
 
 		RotationalSpeed = 325;
 
 		IsGrounded = false;
+
+		score = 0;
+		prevScoreDistance = transform.position.x;
 
 		Rigidbody.velocity = Vector2.right * (float)(HorizontalSpeed / 100.0);
 	}
@@ -49,7 +75,8 @@ public class characterScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		cameraComponent.transform.rotation = new Quaternion() { eulerAngles = new Vector3(0, 0, 0) };
+		checkIsGrounded();
+
 		float currentDeltaTime = Time.deltaTime;
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
@@ -78,55 +105,131 @@ public class characterScript : MonoBehaviour
 				var prevRotation = Rigidbody.rotation;
 				Rigidbody.rotation += RotationalSpeed * Time.deltaTime;
 				Rigidbody.rotation = WrapAngle(Rigidbody.rotation);
- 				if(prevRotation < -45 && Rigidbody.rotation > -45)
+				if(prevRotation < -45 && Rigidbody.rotation > -45)
 				{
-					if (NumFlips < MaxFlips) NumFlips++;
-					Debug.Log($"Flipped {NumFlips} times.");
+					if(NumFlips < MaxFlips) NumFlips++;
 				}
 			}
 		}
-
+		else
+		{
+			RotateCharacterToGround();
+		}
+		
 		BoostX(0, currentDeltaTime);
+
+		if(transform.position.x - prevScoreDistance > 20)
+		{
+			score++;
+			prevScoreDistance = transform.position.x;
+		}
 	}
 
 	public void OnCollisionEnter2D(Collision2D collision)
 	{
-		if(collision.gameObject.CompareTag("ground"))
-		{
-			Rigidbody.gravityScale = 10;
- 			IsGrounded = true;
-			var boost = FlipBoost * NumFlips;
-			var deltaT = Time.deltaTime;
-			if(boost > 0) Debug.Log($"Boosting with {boost}");
-			BoostX(boost, deltaT);
-			NumFlips = 0;
+		// if(collision.gameObject.CompareTag("ground"))
+		// {
+		// 	Rigidbody.gravityScale = 10;
+		// 	IsGrounded = true;
+		// 	lastGroundedTime = Time.time;
+		// 	var boost = FlipBoost * NumFlips;
+		// 	var deltaT = Time.deltaTime;
+		// 	BoostX(boost, deltaT);
+		// 	score += NumFlips;
+		// 	NumFlips = 0;
+		// }
+
+		if(collision.gameObject.CompareTag("obstacle")){
+			GameOver();
 		}
 	}
 
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
-		Debug.Log("Game over");
+		GameOver();
 	}
 
 	public void BoostX(float boost, float currentDeltaTime)
 	{
-		var xVelocity = Math.Min(Rigidbody.velocity.x + boost * currentDeltaTime, MaxX * currentDeltaTime);
-		xVelocity = Math.Max(xVelocity, HorizontalSpeed * currentDeltaTime);
-		Rigidbody.velocity = Rigidbody.velocity.y * Vector2.up + xVelocity * Vector2.right;
+		if(!isGameOver){
+			var xVelocity = Math.Min(Rigidbody.velocity.x + boost * currentDeltaTime, MaxX * currentDeltaTime);
+			xVelocity = Math.Max(xVelocity, HorizontalSpeed * currentDeltaTime);
+			Rigidbody.velocity = Rigidbody.velocity.y * Vector2.up + xVelocity * Vector2.right;
+		}
 	}
+		
 
 	public void OnCollisionExit2D(Collision2D collision)
 	{
-		if(collision.gameObject.CompareTag("ground"))
-		{
-			Rigidbody.gravityScale = 1;
-			IsGrounded = false;
-		}
+		// if (collision.gameObject.CompareTag("ground") && Time.time - lastGroundedTime > groundCheckDelay)
+		// {
+		// 	IsGrounded = false;
+		// 	Rigidbody.gravityScale = 1;
+		// }
 	}
 
 	private float WrapAngle(float angle)
 	{
 		var answer = ((angle + 180) % 360) - 180;
 		return answer;
+	}
+
+	void RotateCharacterToGround()
+	{
+		// // Cast a ray downwards from the character's position to detect the ground.
+		RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, rayDistance);
+
+
+		if(hit.collider != null && hit.collider.CompareTag(groundTag)) // Check if the ray hit something with the ground tag
+		{
+			Vector2 surfaceNormal = hit.normal;
+
+
+			float angle = Mathf.Atan2(surfaceNormal.y, surfaceNormal.x) * Mathf.Rad2Deg;
+			if(Math.Abs(angle) < 30)
+			{
+				GameOver();
+			}
+			if(angle > 10 || angle < -10)
+			{
+				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle - 90f), rotationSpeed * Time.deltaTime);
+			}
+		}
+		
+	}
+
+	private void checkIsGrounded(){
+        if(Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer)){
+			IsGrounded = true;
+			Rigidbody.gravityScale = 10;
+			IsGrounded = true;
+			lastGroundedTime = Time.time;
+			var boost = FlipBoost * NumFlips;
+			var deltaT = Time.deltaTime;
+			BoostX(boost, deltaT);
+			score += NumFlips;
+			NumFlips = 0;
+			Rigidbody.gravityScale = 1;
+            
+        }else{
+            IsGrounded = false;
+			Rigidbody.gravityScale = 3;
+        }
+    }
+
+	private void OnDrawGizmos()
+    {
+        // Draw the ground check radius for visualization
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(groundCheck.position, groundCheckSize);
+    }
+
+	private void GameOver()
+	{
+		GameObject UIM = GameObject.FindGameObjectWithTag("UIManager");
+		UIM.GetComponent<UIManager>().setGameScore(false);
+		UIM.GetComponent<UIManager>().gameOverUI(score.ToString());
+		isGameOver = true;
+		Rigidbody.velocity = new Vector2() { x=0, y=0 };
 	}
 }
