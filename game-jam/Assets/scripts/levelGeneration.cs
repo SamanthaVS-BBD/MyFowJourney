@@ -48,11 +48,11 @@ public class levelGeneration : MonoBehaviour
     public void SpawnObstacle(Transform newChunk)
     {
         int spawnChance = Random.Range(0, 4);
-        if (spawnChance != 3) 
+        if (spawnChance == 3 || spawnChance == 2) 
         {
-            return;
+            StartCoroutine(DelayedSpawnObstacle(newChunk));
         }
-        StartCoroutine(DelayedSpawnObstacle(newChunk));
+        
     }
 
     private IEnumerator DelayedSpawnObstacle(Transform newChunk)
