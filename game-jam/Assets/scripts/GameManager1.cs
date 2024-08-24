@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public Transform[] chunkPrefabs;
     public Transform initialChunk;
     private Transform lastChunk;
-    public GameObject obstaclePrefab;
+    public GameObject[] obstaclePrefab;
     private GameObject player;
     public float spawnDistance = 10f;
     public float removeDistance = 20f;
@@ -47,8 +47,8 @@ public class GameManager : MonoBehaviour
 
     public void SpawnObstacle(Transform newChunk)
     {
-        int spawnChance = Random.Range(0, 4);
-        if (spawnChance == 3 || spawnChance == 4) 
+        int spawnChance = Random.Range(0, 7);
+        if (spawnChance == 0 || spawnChance == 1) 
         {
             Debug.Log("No obstacle spawned, chance: " + spawnChance);
             return;
@@ -72,7 +72,8 @@ public class GameManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            GameObject newObstacle = Instantiate(obstaclePrefab);
+            int randomNum = Random.Range(0, obstaclePrefab.Length + 1 );
+            GameObject newObstacle = Instantiate(obstaclePrefab[randomNum]);
             newObstacle.transform.position = hit.point;
             newObstacle.transform.up = hit.normal;
             newObstacle.transform.SetParent(newChunk);
