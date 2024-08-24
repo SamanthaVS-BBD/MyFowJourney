@@ -154,6 +154,7 @@ public class movement : MonoBehaviour
 
     void Jump()
     {
+        Debug.Log("WE ARE JUMPING");
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
         isJumping = true;
