@@ -38,6 +38,7 @@ public class characterScript : MonoBehaviour
 	public GameObject Ground;
 
 	private int score;
+	public int getScore() => score;
 	private float prevScoreDistance;
 
 	private bool isGameOver;
@@ -190,6 +191,7 @@ public class characterScript : MonoBehaviour
 
 	private void GameOver()
 	{
+		GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>().setGameScore(false);
 		isGameOver = true;
 		Rigidbody.velocity = new Vector2() { x=0, y=0 };
 		gameOverUI.SetActive(true);
