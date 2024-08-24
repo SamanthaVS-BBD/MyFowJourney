@@ -1684,6 +1684,7 @@ MonoBehaviour:
   groundCheckRadius: 0.2
   groundCheckSize: {x: 1.45, y: 0.21}
   isGrounded: 0
+  torqueAmount: 1
 --- !u!58 &703747389
 CircleCollider2D:
   m_ObjectHideFlags: 0

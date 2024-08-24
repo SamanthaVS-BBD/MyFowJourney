@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class characterScript : MonoBehaviour
 {
 	public Camera cameraComponent;
@@ -27,6 +28,12 @@ public class characterScript : MonoBehaviour
 	public string groundTag = "ground"; // Tag that represents the ground or slope.
 
 	[SerializeField] private float rayDistance = 4; // Distance of the raycast.
+
+	[Header("Ground Detection")]
+    public Transform groundCheck;
+    public LayerMask groundLayer;
+    public float groundCheckRadius = 0.2f;
+    public Vector2 groundCheckSize = new Vector2(0.5f, 0.5f);
 	
 	[Header("References")]
 	public sceneManager _sceneManager;
@@ -68,6 +75,8 @@ public class characterScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		checkIsGrounded();
+
 		float currentDeltaTime = Time.deltaTime;
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
@@ -105,7 +114,6 @@ public class characterScript : MonoBehaviour
 		else
 		{
 			RotateCharacterToGround();
-			//Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, Mathf.Clamp(Rigidbody.velocity.y, -MaxVerticalSpeed, 0));
 		}
 		
 		BoostX(0, currentDeltaTime);
@@ -119,17 +127,17 @@ public class characterScript : MonoBehaviour
 
 	public void OnCollisionEnter2D(Collision2D collision)
 	{
-		if(collision.gameObject.CompareTag("ground"))
-		{
-			Rigidbody.gravityScale = 10;
-			IsGrounded = true;
-			lastGroundedTime = Time.time;
-			var boost = FlipBoost * NumFlips;
-			var deltaT = Time.deltaTime;
-			BoostX(boost, deltaT);
-			score += NumFlips;
-			NumFlips = 0;
-		}
+		// if(collision.gameObject.CompareTag("ground"))
+		// {
+		// 	Rigidbody.gravityScale = 10;
+		// 	IsGrounded = true;
+		// 	lastGroundedTime = Time.time;
+		// 	var boost = FlipBoost * NumFlips;
+		// 	var deltaT = Time.deltaTime;
+		// 	BoostX(boost, deltaT);
+		// 	score += NumFlips;
+		// 	NumFlips = 0;
+		// }
 
 		if(collision.gameObject.CompareTag("obstacle")){
 			GameOver();
@@ -153,11 +161,11 @@ public class characterScript : MonoBehaviour
 
 	public void OnCollisionExit2D(Collision2D collision)
 	{
-		if (collision.gameObject.CompareTag("ground") && Time.time - lastGroundedTime > groundCheckDelay)
-		{
-			IsGrounded = false;
-			Rigidbody.gravityScale = 1;
-		}
+		// if (collision.gameObject.CompareTag("ground") && Time.time - lastGroundedTime > groundCheckDelay)
+		// {
+		// 	IsGrounded = false;
+		// 	Rigidbody.gravityScale = 1;
+		// }
 	}
 
 	private float WrapAngle(float angle)
@@ -166,7 +174,6 @@ public class characterScript : MonoBehaviour
 		return answer;
 	}
 
-	private float rotationVelocity = 0.0f;
 	void RotateCharacterToGround()
 	{
 		// // Cast a ray downwards from the character's position to detect the ground.
@@ -191,6 +198,31 @@ public class characterScript : MonoBehaviour
 		
 	}
 
+	private void checkIsGrounded(){
+        if(Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer)){
+			IsGrounded = true;
+			Rigidbody.gravityScale = 10;
+			IsGrounded = true;
+			lastGroundedTime = Time.time;
+			var boost = FlipBoost * NumFlips;
+			var deltaT = Time.deltaTime;
+			BoostX(boost, deltaT);
+			score += NumFlips;
+			NumFlips = 0;
+			Rigidbody.gravityScale = 1;
+            
+        }else{
+            IsGrounded = false;
+			Rigidbody.gravityScale = 3;
+        }
+    }
+
+	private void OnDrawGizmos()
+    {
+        // Draw the ground check radius for visualization
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(groundCheck.position, groundCheckSize);
+    }
 
 	private void GameOver()
 	{
