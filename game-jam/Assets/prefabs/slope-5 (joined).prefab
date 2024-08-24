@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3939699041883867558}
   - component: {fileID: 6746712548546624759}
   - component: {fileID: 7768510408560614824}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: slope-5 (joined)
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 109933681616686812}
   - component: {fileID: 3272487559108398279}
   - component: {fileID: 700807922701291794}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: slope-8
   m_TagString: ground
   m_Icon: {fileID: 0}

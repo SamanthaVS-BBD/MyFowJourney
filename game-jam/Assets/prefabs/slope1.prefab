@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2583548870382065956}
   - component: {fileID: 6231475185200719603}
   - component: {fileID: 4558022619239170713}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: slope1
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -899894377
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: 3f27f9b0be71e554ebdae8d06da06f3a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -113,7 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7431067109599654671}
   - component: {fileID: 2073736937030562982}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -899894377
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 7
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 2309665813763779776}
   - component: {fileID: 492110032042419617}
   - component: {fileID: 5633117194864171479}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Untitled_Artwork-2
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -899894377
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: 6d2242d9247ae704dbeb02c003a1ff93, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -294,7 +294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5210563297831288171}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HighestPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6409546279349228445}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LowestPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1695450110004894050}
   - component: {fileID: 7994941722676924565}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +418,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -899894377
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 7
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

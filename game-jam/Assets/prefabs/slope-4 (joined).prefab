@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6956790764174271694}
   - component: {fileID: 8606369922509981441}
   - component: {fileID: 3387542586595974194}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: slope-6
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -899894377
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: b4b234605ddf2354fb333a9e3b0112de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -107,7 +107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5169588290662269776}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LowestPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8629229921191045074}
   - component: {fileID: 4922556257891617970}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -899894377
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 7
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 9040935072553668853}
   - component: {fileID: 176108441200535376}
   - component: {fileID: 8382510145764452311}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: slope-4 (joined)
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -899894377
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: 5f6a375247fb36c43b9967ab1cda40e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -324,7 +324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3448898628666960194}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HighestPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

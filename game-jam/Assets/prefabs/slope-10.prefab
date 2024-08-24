@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4403802776991059295}
   - component: {fileID: 7135969739930305164}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -899894377
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 7
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7781375666950664600}
   - component: {fileID: 631148584619175624}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3125762126154050252}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HighestPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 2511666135174953739}
   - component: {fileID: 7833833041694249894}
   - component: {fileID: 2345176886009614645}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: slope-10
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -899894377
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: e847c51cce8ac9a48b086b86ba755a3d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -271,7 +271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6774546349092960171}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LowestPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

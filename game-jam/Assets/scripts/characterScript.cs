@@ -6,42 +6,42 @@ public class characterScript : MonoBehaviour
 {
 	public Camera cameraComponent;
 	public Rigidbody2D Rigidbody;
+
+	[Header("Movement")]
 	public float VerticalSpeed = 1500;
 	public float MaxY = 3500;
 	public float MaxVerticalSpeed;
 	public float antiGravity;
-
 	public float MinX = 800;
 	public float HorizontalSpeed = 175;
 	public float MaxX = 1000;
 
+	[Header("Jump")]
 	public float RotationalSpeed = 325;
-
 	public bool IsGrounded = false;
 	public int NumFlips = 0;
 	public int MaxFlips = 10;
 	public float FlipBoost = 500;
-
+	public float rotationSpeed = 8f;
 	public Transform characterTransform; // The transform of your character.
 	public string groundTag = "ground"; // Tag that represents the ground or slope.
 
-	[SerializeField]
-	public float rayDistance = 4; // Distance of the raycast.
-	public float rotationSpeed = 8f;
-
+	[SerializeField] private float rayDistance = 4; // Distance of the raycast.
+	
+	[Header("References")]
 	public sceneManager _sceneManager;
-
 	public gameOverScript _gameOverScript;
 	public Text ScoreDisplay;
 	public GameObject gameOverUI;
-
 	public GameObject Ground;
 
 	private int score;
 	public int getScore() => score;
 	private float prevScoreDistance;
-
 	private bool isGameOver;
+
+	private float groundCheckDelay = 0.1f;
+	private float lastGroundedTime = 0;
 
 	// Start is called before the first frame update
 	void Start()
@@ -52,7 +52,7 @@ public class characterScript : MonoBehaviour
 		antiGravity = 10f;
 
 		MinX = 2000;
-		HorizontalSpeed = 1750;
+		HorizontalSpeed = 2000;//1750;
 		MaxX = 3500;
 
 		RotationalSpeed = 325;
@@ -105,7 +105,7 @@ public class characterScript : MonoBehaviour
 		else
 		{
 			RotateCharacterToGround();
-			Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, Mathf.Clamp(Rigidbody.velocity.y, -MaxVerticalSpeed, 0));
+			//Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, Mathf.Clamp(Rigidbody.velocity.y, -MaxVerticalSpeed, 0));
 		}
 		
 		BoostX(0, currentDeltaTime);
@@ -123,12 +123,16 @@ public class characterScript : MonoBehaviour
 		{
 			Rigidbody.gravityScale = 10;
 			IsGrounded = true;
-			//lastGroundedTime = Time.time;
+			lastGroundedTime = Time.time;
 			var boost = FlipBoost * NumFlips;
 			var deltaT = Time.deltaTime;
 			BoostX(boost, deltaT);
 			score += NumFlips;
 			NumFlips = 0;
+		}
+
+		if(collision.gameObject.CompareTag("obstacle")){
+			GameOver();
 		}
 	}
 
@@ -149,7 +153,7 @@ public class characterScript : MonoBehaviour
 
 	public void OnCollisionExit2D(Collision2D collision)
 	{
-		if (collision.gameObject.CompareTag("ground") ) //&& Time.time - lastGroundedTime > groundCheckDelay
+		if (collision.gameObject.CompareTag("ground") && Time.time - lastGroundedTime > groundCheckDelay)
 		{
 			IsGrounded = false;
 			Rigidbody.gravityScale = 1;
@@ -162,10 +166,10 @@ public class characterScript : MonoBehaviour
 		return answer;
 	}
 
-
+	private float rotationVelocity = 0.0f;
 	void RotateCharacterToGround()
 	{
-		// Cast a ray downwards from the character's position to detect the ground.
+		// // Cast a ray downwards from the character's position to detect the ground.
 		RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, rayDistance);
 
 
@@ -183,19 +187,17 @@ public class characterScript : MonoBehaviour
 			{
 				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle - 90f), rotationSpeed * Time.deltaTime);
 			}
-
-
 		}
+		
 	}
 
 
 	private void GameOver()
 	{
-		GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>().setGameScore(false);
+		GameObject UIM = GameObject.FindGameObjectWithTag("UIManager");
+		UIM.GetComponent<UIManager>().setGameScore(false);
+		UIM.GetComponent<UIManager>().gameOverUI(score.ToString());
 		isGameOver = true;
 		Rigidbody.velocity = new Vector2() { x=0, y=0 };
-		gameOverUI.SetActive(true);
-		
-		_gameOverScript.Setup(score);
 	}
 }
