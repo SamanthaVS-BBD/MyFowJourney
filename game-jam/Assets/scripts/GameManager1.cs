@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         int spawnChance = Random.Range(0, 7);
         if (spawnChance == 0 || spawnChance == 1) 
         {
-            Debug.Log("No obstacle spawned, chance: " + spawnChance);
+            Debug.LogError("No obstacle spawned, chance: " + spawnChance);
             return;
         }
         StartCoroutine(DelayedSpawnObstacle(newChunk));
@@ -89,6 +89,10 @@ public class GameManager : MonoBehaviour
     {
         Transform newChunk = Instantiate(chunkPrefabs[Random.Range(0, chunkPrefabs.Length)]);
         ConnectChunks(lastChunk, newChunk);
+        if (newChunk.Find("gapGround") == null)
+        {
+            SpawnObstacle(newChunk);
+        }
         SpawnObstacle(newChunk);
         lastChunk = newChunk;
         activeChunks.Add(newChunk);

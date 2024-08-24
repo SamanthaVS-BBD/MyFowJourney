@@ -26,6 +26,7 @@ public class characterScript : MonoBehaviour
 	public float rotationSpeed = 8f;
 	public Transform characterTransform; // The transform of your character.
 	public string groundTag = "ground"; // Tag that represents the ground or slope.
+	public string gapTag = "gapGround"; // Tag that represents the gap.
 
 	[SerializeField] private float rayDistance = 4; // Distance of the raycast.
 
@@ -180,7 +181,7 @@ public class characterScript : MonoBehaviour
 		RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, rayDistance);
 
 
-		if(hit.collider != null && hit.collider.CompareTag(groundTag)) // Check if the ray hit something with the ground tag
+		if(hit.collider != null && hit.collider.CompareTag(groundTag) || hit.collider.CompareTag(gapTag)) // Check if the ray hit something with the ground tag
 		{
 			Vector2 surfaceNormal = hit.normal;
 

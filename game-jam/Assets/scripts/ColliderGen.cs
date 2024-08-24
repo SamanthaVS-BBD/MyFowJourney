@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class SmoothColliderAdder2D : MonoBehaviour
 {
@@ -19,15 +20,18 @@ public class SmoothColliderAdder2D : MonoBehaviour
     void UpdateColliders()
     {
         GameObject[] groundObjects = GameObject.FindGameObjectsWithTag("ground");
+        GameObject[] gapGroundObjects = GameObject.FindGameObjectsWithTag("gapGround");
 
-        Debug.Log($"Found {groundObjects.Length} objects tagged as 'Ground'");
+        GameObject[] allGroundObjects = groundObjects.Concat(gapGroundObjects).ToArray();
 
-        if (groundObjects.Length == 0)
+        Debug.Log($"Found {allGroundObjects.Length} objects tagged as 'Ground'");
+
+        if (allGroundObjects.Length == 0)
         {
             Debug.LogWarning("No objects found with 'Ground' tag.");
         }
 
-        foreach (GameObject groundObject in groundObjects)
+        foreach (GameObject groundObject in allGroundObjects)
         {
             if (groundObject == null) continue;
 
