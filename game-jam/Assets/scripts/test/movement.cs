@@ -154,7 +154,10 @@ public class movement : MonoBehaviour
 
     void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        if (rb.rotation > 10)
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce * 2.2f);
+        else
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
         isJumping = true;
     }
