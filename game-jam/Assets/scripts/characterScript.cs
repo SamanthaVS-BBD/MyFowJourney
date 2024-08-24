@@ -104,7 +104,10 @@ public class characterScript : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
-		Debug.Log("Game over");
+		if(collision.gameObject.CompareTag("ground") || collision.gameObject.CompareTag("obstacle")){
+			Debug.Log("Game over");
+		}
+		
 	}
 
 	public void BoostX(float boost, float currentDeltaTime)
