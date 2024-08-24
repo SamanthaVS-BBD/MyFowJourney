@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            int randomNum = Random.Range(0, obstaclePrefab.Length + 1 );
+            int randomNum = Random.Range(0, obstaclePrefab.Length);
             GameObject newObstacle = Instantiate(obstaclePrefab[randomNum]);
             newObstacle.transform.position = hit.point;
             newObstacle.transform.up = hit.normal;
