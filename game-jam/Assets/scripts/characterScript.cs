@@ -1,6 +1,6 @@
 using System;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class characterScript : MonoBehaviour
 {
@@ -23,12 +23,29 @@ public class characterScript : MonoBehaviour
 	public float FlipBoost = 500;
 
 	public Transform characterTransform; // The transform of your character.
-    public string groundTag = "ground"; // Tag that represents the ground or slope.
+	public string groundTag = "ground"; // Tag that represents the ground or slope.
+
+	[SerializeField]
+	public float rayDistance = 4; // Distance of the raycast.
+	public float rotationSpeed = 8f;
+
+	public sceneManager _sceneManager;
+
+	public gameOverScript _gameOverScript;
+	public Text ScoreDisplay;
+	public GameObject gameOverUI;
 
 	public GameObject Ground;
+
+	private int score;
+	private float prevScoreDistance;
+
+	private bool isGameOver;
+
 	// Start is called before the first frame update
 	void Start()
 	{
+		isGameOver = false;
 		VerticalSpeed = 1500;
 		MaxY = 1000;
 		antiGravity = 10f;
@@ -41,13 +58,15 @@ public class characterScript : MonoBehaviour
 
 		IsGrounded = false;
 
+		score = 0;
+		prevScoreDistance = transform.position.x;
+
 		Rigidbody.velocity = Vector2.right * (float)(HorizontalSpeed / 100.0);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		//cameraComponent.transform.rotation = new Quaternion() { eulerAngles = new Vector3(0, 0, 0) };
 		float currentDeltaTime = Time.deltaTime;
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
@@ -69,23 +88,32 @@ public class characterScript : MonoBehaviour
 			}
 		}
 
-
 		if(!IsGrounded)
 		{
 			if(Input.GetKey(KeyCode.Space))
-			{	
+			{
 				var prevRotation = Rigidbody.rotation;
 				Rigidbody.rotation += RotationalSpeed * Time.deltaTime;
 				Rigidbody.rotation = WrapAngle(Rigidbody.rotation);
- 				if(prevRotation < -45 && Rigidbody.rotation > -45)
+				if(prevRotation < -45 && Rigidbody.rotation > -45)
 				{
-					if (NumFlips < MaxFlips) NumFlips++;
-					Debug.Log($"Flipped {NumFlips} times.");
+					if(NumFlips < MaxFlips) NumFlips++;
 				}
 			}
 		}
-
+		else
+		{
+			RotateCharacterToGround();
+			Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, Mathf.Clamp(Rigidbody.velocity.y, -MaxVerticalSpeed, 0));
+		}
+		
 		BoostX(0, currentDeltaTime);
+
+		if(transform.position.x - prevScoreDistance > 20)
+		{
+			score++;
+			prevScoreDistance = transform.position.x;
+		}
 	}
 
 	public void OnCollisionEnter2D(Collision2D collision)
@@ -93,36 +121,37 @@ public class characterScript : MonoBehaviour
 		if(collision.gameObject.CompareTag("ground"))
 		{
 			Rigidbody.gravityScale = 10;
- 			IsGrounded = true;
+			IsGrounded = true;
+			//lastGroundedTime = Time.time;
 			var boost = FlipBoost * NumFlips;
 			var deltaT = Time.deltaTime;
-			if(boost > 0) Debug.Log($"Boosting with {boost}");
 			BoostX(boost, deltaT);
+			score += NumFlips;
 			NumFlips = 0;
 		}
 	}
 
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
-		if(collision.gameObject.CompareTag("ground") || collision.gameObject.CompareTag("obstacle")){
-			Debug.Log("Game over");
-		}
-		
+		GameOver();
 	}
 
 	public void BoostX(float boost, float currentDeltaTime)
 	{
-		var xVelocity = Math.Min(Rigidbody.velocity.x + boost * currentDeltaTime, MaxX * currentDeltaTime);
-		xVelocity = Math.Max(xVelocity, HorizontalSpeed * currentDeltaTime);
-		Rigidbody.velocity = Rigidbody.velocity.y * Vector2.up + xVelocity * Vector2.right;
+		if(!isGameOver){
+			var xVelocity = Math.Min(Rigidbody.velocity.x + boost * currentDeltaTime, MaxX * currentDeltaTime);
+			xVelocity = Math.Max(xVelocity, HorizontalSpeed * currentDeltaTime);
+			Rigidbody.velocity = Rigidbody.velocity.y * Vector2.up + xVelocity * Vector2.right;
+		}
 	}
+		
 
 	public void OnCollisionExit2D(Collision2D collision)
 	{
-		if(collision.gameObject.CompareTag("ground"))
+		if (collision.gameObject.CompareTag("ground") ) //&& Time.time - lastGroundedTime > groundCheckDelay
 		{
-			Rigidbody.gravityScale = 1;
 			IsGrounded = false;
+			Rigidbody.gravityScale = 1;
 		}
 	}
 
@@ -130,5 +159,41 @@ public class characterScript : MonoBehaviour
 	{
 		var answer = ((angle + 180) % 360) - 180;
 		return answer;
+	}
+
+
+	void RotateCharacterToGround()
+	{
+		// Cast a ray downwards from the character's position to detect the ground.
+		RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, rayDistance);
+
+
+		if(hit.collider != null && hit.collider.CompareTag(groundTag)) // Check if the ray hit something with the ground tag
+		{
+			Vector2 surfaceNormal = hit.normal;
+
+
+			float angle = Mathf.Atan2(surfaceNormal.y, surfaceNormal.x) * Mathf.Rad2Deg;
+			if(Math.Abs(angle) < 30)
+			{
+				GameOver();
+			}
+			if(angle > 10 || angle < -10)
+			{
+				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle - 90f), rotationSpeed * Time.deltaTime);
+			}
+
+
+		}
+	}
+
+
+	private void GameOver()
+	{
+		isGameOver = true;
+		Rigidbody.velocity = new Vector2() { x=0, y=0 };
+		gameOverUI.SetActive(true);
+		
+		_gameOverScript.Setup(score);
 	}
 }
