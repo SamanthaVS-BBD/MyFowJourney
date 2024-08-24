@@ -47,6 +47,8 @@ public class characterScript : MonoBehaviour
 	private float prevScoreDistance;
 	private bool isGameOver;
 
+	public GameObject backgroungThing;
+
 	private float groundCheckDelay = 0.1f;
 	private float lastGroundedTime = 0;
 
@@ -75,6 +77,8 @@ public class characterScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		backgroungThing.transform.position = new Vector3 (backgroungThing.transform.position.x, transform.position.y, backgroungThing.transform.position.z);
+
 		checkIsGrounded();
 
 		float currentDeltaTime = Time.deltaTime;
