@@ -49,8 +49,21 @@ public class movement : MonoBehaviour
     public int getScore() => score;
     private float prevScoreDistance;
     private bool isGameOver;
+
+    [Header("Sound Clips")]
+    [SerializeField] private AudioClip landingSound;
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip bgm;
+
+
+    [Header("Sound Sources")]
+    [SerializeField] private AudioSource landingSource;
+    [SerializeField] private AudioSource deathSource;
+    [SerializeField] private AudioSource bgmSource;
+
     void Start()
     {
+        playClip(bgmSource, bgm, true, 0.1f);
         isGameOver = false;
         rb = GetComponent<Rigidbody2D>();
         prevScoreDistance = transform.position.x;
@@ -67,50 +80,54 @@ public class movement : MonoBehaviour
         {
             rb.velocity = new Vector2() { x = 0, y = 0 };
         }
-
+        Boolean inAir = !isGrounded;
         isGrounded = checkIsGrounded();
+        if (inAir == isGrounded && !isGameOver)
+        {
+            playClip(landingSource, landingSound, volume: 0.005f);
+        }
 
-        // if (Input.GetKey(KeyCode.Space))
-        // {
-        //     // Start tracking the time if we are holding space
-        //     if (!isTricking)
-        //     {
-        //         if (trickStartTime == 0f)
-        //         {
-        //             trickStartTime = Time.time;
-        //         }
-        //         else if (Time.time - trickStartTime >= trickThreshold)
-        //         {
-        //             // Perform trick if held long enough
-        //             isTricking = true;
-        //         }
-        //     }
-        //     else
-        //     {
-        //         // Perform trick while space is held
-        //         PerformTrick();
-        //     }
-        // }
-        // else
-        // {
-        //     if (isTricking)
-        //     {
-        //         // End trick and apply boost if landed
-        //         isTricking = false;
-        //         if (isGrounded)
-        //         {
-        //             rb.velocity = new Vector2(moveSpeed + trickBoost, rb.velocity.y);
-        //         }
-        //     }
-        //     else if (Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter > 0f)
-        //     {
-        //         // Jump if space is tapped
-        //         Jump();
-        //     }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            // Start tracking the time if we are holding space
+            if (!isTricking)
+            {
+                if (trickStartTime == 0f)
+                {
+                    trickStartTime = Time.time;
+                }
+                else if (Time.time - trickStartTime >= trickThreshold)
+                {
+                    // Perform trick if held long enough
+                    isTricking = true;
+                }
+            }
+            else
+            {
+                // Perform trick while space is held
+                PerformTrick();
+            }
+        }
+        else
+        {
+            if (isTricking)
+            {
+                // End trick and apply boost if landed
+                isTricking = false;
+                if (isGrounded)
+                {
+                    rb.velocity = new Vector2(moveSpeed + trickBoost, rb.velocity.y);
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter > 0f)
+            {
+                // Jump if space is tapped
+                Jump();
+            }
 
-        //     // Reset trick tracking
-        //     trickStartTime = 0f;
-        // }
+            // Reset trick tracking
+            trickStartTime = 0f;
+        }
 
 
         if (isGrounded)
@@ -273,10 +290,19 @@ public class movement : MonoBehaviour
 
     private void GameOver()
     {
+        playClip(deathSource, deathSound, volume: 0.35f);
         GameObject UIM = GameObject.FindGameObjectWithTag("UIManager");
         UIM.GetComponent<UIManager>().setGameScore(false);
         UIM.GetComponent<UIManager>().gameOverUI(score.ToString());
         isGameOver = true;
         rb.velocity = new Vector2() { x = 0, y = 0 };
+    }
+
+    private void playClip(AudioSource source, AudioClip clip, Boolean loop = false, float volume = 1f)
+    {
+        source.clip = clip;
+        source.volume = volume;
+        source.Play();
+        source.loop = loop;
     }
 }
