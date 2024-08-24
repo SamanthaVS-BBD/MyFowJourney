@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void setScoreText(){
-        scoreTxt.text = _player.GetComponent<characterScript>().getScore().ToString();
+        scoreTxt.text = _player.GetComponent<movement>().getScore().ToString();
     }
 
     public void setGameScore(bool state){
