@@ -142,7 +142,7 @@ public class movement : MonoBehaviour
         }
         else
         {
-            rb.gravityScale = 3;
+            rb.gravityScale = 4;
         }
 
         if (transform.position.x - prevScoreDistance > 20)
@@ -278,7 +278,7 @@ public class movement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("ground") || other.gameObject.CompareTag("obstacle"))
+        if (other.gameObject.CompareTag("ground") || other.gameObject.CompareTag("obstacle") || other.gameObject.CompareTag("deadBox"))
         {
             GameOver();
         }
@@ -286,7 +286,7 @@ public class movement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("obstacle"))
+        if (other.gameObject.CompareTag("obstacle") || other.gameObject.CompareTag("deadBox"))
         {
             GameOver();
         }

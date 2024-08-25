@@ -72,12 +72,17 @@ public class GameManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            int randomNum = Random.Range(0, obstaclePrefab.Length);
-            GameObject newObstacle = Instantiate(obstaclePrefab[randomNum]);
-            newObstacle.transform.position = hit.point;
-            newObstacle.transform.up = hit.normal;
-            newObstacle.transform.SetParent(newChunk);
-            Debug.Log("Obstacle spawned at: " + hit.point);
+            if(hit.collider.tag == "deadBox"){
+
+            }else{
+                int randomNum = Random.Range(0, obstaclePrefab.Length);
+                GameObject newObstacle = Instantiate(obstaclePrefab[randomNum]);
+                newObstacle.transform.position = hit.point;
+                newObstacle.transform.up = hit.normal;
+                newObstacle.transform.SetParent(newChunk);
+                Debug.Log("Obstacle spawned at: " + hit.point);
+            }
+            
         }
         else
         {

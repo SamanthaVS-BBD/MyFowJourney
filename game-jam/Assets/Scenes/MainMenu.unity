@@ -2881,10 +2881,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 530142268901349386}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 156.40991}
-  m_SizeDelta: {x: 451.6822, y: 92.8324}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -0.0000076293945, y: -104.42}
+  m_SizeDelta: {x: 632.31, y: 208.84}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &530142268901349386
 RectTransform:
@@ -3079,7 +3079,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8018868, g: 0.31315243, b: 0.2988163, a: 0.9411765}
+  m_Color: {r: 0.8018868, g: 0.31315243, b: 0.2988163, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3357,7 +3357,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 5
+  m_fontStyle: 4
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3428,7 +3428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000005722046, y: -15}
+  m_AnchoredPosition: {x: 0.000005722046, y: -6.7}
   m_SizeDelta: {x: 424.01, y: 214.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &4641594049456798003
@@ -3616,8 +3616,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 75
+  m_fontSizeBase: 75
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3718,8 +3718,8 @@ MonoBehaviour:
     Practice makes perfect!
     Keep trying to improve your distance.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 28055e15283762e4988504db666f8d38, type: 2}
-  m_sharedMaterial: {fileID: -8283526471616781595, guid: 28055e15283762e4988504db666f8d38, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9cd10777244fafa499686e4988fd4a7e, type: 2}
+  m_sharedMaterial: {fileID: -8096203536985723957, guid: 9cd10777244fafa499686e4988fd4a7e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

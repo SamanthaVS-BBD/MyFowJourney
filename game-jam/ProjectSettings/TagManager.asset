@@ -8,6 +8,7 @@ TagManager:
   - obstacle
   - UIManager
   - gapGround
+  - deadBox
   layers:
   - Default
   - TransparentFX
